@@ -1,6 +1,9 @@
 package tests;
 
-import io.qameta.allure.*;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.CustomerPage;
@@ -14,8 +17,7 @@ public class DeleteCustomerTest extends BaseTest {
     @Story("Delete Customer")
     @Description("Verify that a customer can be deleted successfully.")
     public void testDeleteCustomer() {
-        String startUrl = "https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager/list";
-        openUrl(startUrl);
+        openUrl("https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager/list");
 
         CustomerPage customerPage = new CustomerPage(driver);
 
@@ -34,8 +36,6 @@ public class DeleteCustomerTest extends BaseTest {
                     return Double.compare(diff1, diff2);
                 })
                 .orElseThrow(() -> new AssertionError("Failed to find a customer to delete."));
-
-        System.out.println("Deleting customer: " + nameToDelete);
 
         customerPage.deleteCustomerByName(nameToDelete);
 

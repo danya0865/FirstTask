@@ -1,6 +1,9 @@
 package tests;
 
-import io.qameta.allure.*;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.ManagerPage;
@@ -14,8 +17,7 @@ public class AddCustomerTest extends BaseTest {
     @Story("Add Customer")
     @Description("Verify that a customer can be added successfully.")
     public void testAddCustomer() {
-        String startUrl = "https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager/addCust";
-        openUrl(startUrl);
+        openUrl("https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager/addCust");
 
         ManagerPage managerPage = new ManagerPage(driver);
 
@@ -23,7 +25,6 @@ public class AddCustomerTest extends BaseTest {
         String firstName = HelperUtils.generateFirstName(postCode);
         String lastName = "lastName";
 
-        //managerPage.clickAddCustomer();
         managerPage.fillCustomerDetails(firstName, lastName, postCode);
         managerPage.submitCustomerForm();
 
