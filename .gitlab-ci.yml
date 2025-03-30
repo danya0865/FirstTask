@@ -11,7 +11,7 @@ cache:
 
 run-tests:
   stage: test
-  image: maven:3.8.6-openjdk-17  # Образ с Maven и Java
+  image: maven:3.8.6-openjdk-17
   services:
     - selenium/standalone-chrome:latest  # Selenium Chrome в Docker
   before_script:
