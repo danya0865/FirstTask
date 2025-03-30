@@ -26,15 +26,24 @@ public class ManagerPage extends BasePage {
     }
 
     @Step("Заполнение данных клиента: имя = {0}, фамилия = {1}, почтовый индекс = {2}")
-    public void fillCustomerDetails(String firstName, String lastName, String postCode) {
+    public ManagerPage fillCustomerDetails(String firstName, String lastName, String postCode) {
         WaitHelper.waitForVisibilityOfElement(driver, firstNameInput, 10);
         firstNameInput.sendKeys(firstName);
         lastNameInput.sendKeys(lastName);
         postCodeInput.sendKeys(postCode);
+        return this;
     }
 
     @Step("Отправка формы добавления клиента")
-    public void submitCustomerForm() {
+    public ManagerPage submitCustomerForm() {
         submitButton.click();
+        return this;
+    }
+
+    @Step("Получение текста алерта")
+    public String getAlertText() {
+        String text = driver.switchTo().alert().getText();
+        driver.switchTo().alert().accept();
+        return text;
     }
 }

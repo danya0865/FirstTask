@@ -1,12 +1,14 @@
 package tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Epic;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import java.time.Duration;
 
+@Epic("Banking Application")
 public abstract class BaseTest {
     protected WebDriver driver;
 

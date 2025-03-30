@@ -26,10 +26,11 @@ public class CustomerPage extends BasePage {
     }
 
     @Step("Сортировка клиентов по имени")
-    public void sortCustomersByFirstName() {
+    public CustomerPage sortCustomersByFirstName() {
         WaitHelper.waitForElementToBeClickable(driver, firstNameHeader, 10);
         firstNameHeader.click();
         firstNameHeader.click();
+        return this;
     }
 
     @Step("Получение списка имен клиентов")
@@ -41,7 +42,7 @@ public class CustomerPage extends BasePage {
     }
 
     @Step("Удаление клиента с именем: {nameToDelete}")
-    public void deleteCustomerByName(String nameToDelete) {
+    public CustomerPage deleteCustomerByName(String nameToDelete) {
         WaitHelper.waitForVisibilityOfAllElements(driver, firstNames, 10);
 
         for (int i = 0; i < firstNames.size(); i++) {
@@ -54,11 +55,6 @@ public class CustomerPage extends BasePage {
                 break;
             }
         }
-    }
-
-    @Step("Получение списка имен после сортировки")
-    public List<String> getCustomerFirstNamesAfterSorting() {
-        sortCustomersByFirstName();
-        return getCustomerFirstNames();
+        return this;
     }
 }
