@@ -3,25 +3,24 @@ stages:
 
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
-  MAVEN_HOME: "C:/Program Files/apache-maven-3.9.9-bin/apache-maven-3.9.9"
-  PATH: "$MAVEN_HOME/bin;${PATH}"
 
 cache:
   paths:
     - .m2/repository/
     - target/
 
-run-tests:
+test:
   stage: test
-  image: maven:3.8.6-openjdk-17  # Образ с Maven и Java
-  services:
-    - selenium/standalone-chrome:latest  # Готовый контейнер с Chrome
+  image: maven:3.8.6-openjdk-17
   script:
-    - mvn clean test -Dselenium.browser=chrome -Dwebdriver.base.url=${WEB_TEST_URL}
+    - mvn clean test
+    - echo "Tests completed"
   artifacts:
+    when: always
     paths:
       - target/surefire-reports/
-    expire_in: 1 week
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: $CI_COMMIT_BRANCH == "main"
+      - target/allure-results/
+    reports:
+      junit: target/surefire-reports/*.xml
+  tags:
+    - docker
