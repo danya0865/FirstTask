@@ -1,18 +1,22 @@
 stages:
   - test
 
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
 test:
   stage: test
   tags:
-    - tagspr  # Используем ваш тег вместо docker
+    - tagspr
   before_script:
-    - choco install maven -y --no-progress  # Устанавливаем Maven через Chocolatey
-    - choco install jdk17 -y --no-progress  # Устанавливаем JDK 17
-    - refreshenv  # Обновляем переменные среды
-    - mvn --version  # Проверяем установку Maven
-    - java --version  # Проверяем установку Java
+    - choco install jdk17 -y --no-progress
+    - choco install maven -y --no-progress
+    - refreshenv
+    - mvn --version
+    - java --version
   script:
     - mvn clean test
+  after_script:
     - echo "Tests completed"
   artifacts:
     when: always
