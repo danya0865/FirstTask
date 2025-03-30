@@ -11,22 +11,15 @@ cache:
 
 run-tests:
   stage: test
-  image: maven:3.8.6-openjdk-17
+  image: maven:3.8.6-openjdk-17  # Образ с Maven и Java
   services:
-    - selenium/standalone-chrome:latest
-  before_script:
-    - apt-get update -qq
-    - apt-get install -yqq wget unzip
-    - wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    - apt-get install -yqq ./google-chrome-stable_current_amd64.deb
-    - chrome --version
+    - selenium/standalone-chrome:latest  # Готовый контейнер с Chrome
   script:
     - mvn clean test -Dselenium.browser=chrome -Dwebdriver.base.url=${WEB_TEST_URL}
   artifacts:
-    when: always
     paths:
-      - target/surefire-reports/  # Артефакты с отчётами
+      - target/surefire-reports/
     expire_in: 1 week
   rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"  # Запуск при MR
-    - if: $CI_COMMIT_BRANCH == "main"                  # Запуск в main
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "main"
