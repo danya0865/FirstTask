@@ -1,17 +1,16 @@
 stages:
   - test
 
-variables:
-  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
-
-cache:
-  paths:
-    - .m2/repository/
-    - target/
-
 test:
   stage: test
-  image: maven:3.8.6-openjdk-17
+  tags:
+    - tagspr  # Используем ваш тег вместо docker
+  before_script:
+    - choco install maven -y --no-progress  # Устанавливаем Maven через Chocolatey
+    - choco install jdk17 -y --no-progress  # Устанавливаем JDK 17
+    - refreshenv  # Обновляем переменные среды
+    - mvn --version  # Проверяем установку Maven
+    - java --version  # Проверяем установку Java
   script:
     - mvn clean test
     - echo "Tests completed"
@@ -22,5 +21,3 @@ test:
       - target/allure-results/
     reports:
       junit: target/surefire-reports/*.xml
-  tags:
-    - tagspr
