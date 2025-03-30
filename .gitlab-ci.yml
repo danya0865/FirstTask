@@ -13,7 +13,7 @@ run-tests:
   stage: test
   image: maven:3.8.6-openjdk-17
   services:
-    - selenium/standalone-chrome:latest  # Selenium Chrome в Docker
+    - selenium/standalone-chrome:latest
   before_script:
     - apt-get update -qq
     - apt-get install -yqq wget unzip
